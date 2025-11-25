@@ -2,6 +2,7 @@ package com.prajil.learning.cicuitbreaker.controller;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,11 +17,12 @@ public class EmployeeController {
         return "Employee details";
     }
 
-    @GetMapping("/details")
+    @GetMapping("/details1")
     @Retry(name = "employeeServiceCircuitBreaker", fallbackMethod = "getEmployeeDetailsFallback")
     public String getEmployeeDetailsByName() {
         return "Employee details";
     }
+
 
     public String getEmployeeDetailsFallback(Throwable t) {
         return "Employee details are currently unavailable. Please try again later.";
